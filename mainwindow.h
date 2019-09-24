@@ -34,6 +34,7 @@ private:
     QSystemTrayIcon *trayicon;
     QMenu* trayIconMenu;
 
+    void createTrayMenu();
     void setColour();
     void updatePreferences();
 };

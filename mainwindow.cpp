@@ -17,6 +17,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->centralwidget->layout()->setContentsMargins(0,0,0,0);
+    this->layout()->setContentsMargins(0,0,0,0);
+    this->layout()->setSizeConstraint(QLayout::SetMinimumSize);
+
     //load settings
     QSettings settings;
     restoreGeometry(settings.value("MainGeometry").toByteArray());
@@ -25,10 +29,11 @@ MainWindow::MainWindow(QWidget *parent)
     //set Flags
     setWindowFlag(Qt::WindowStaysOnTopHint);
     setWindowFlag(Qt::Tool);
-    //setWindowFlag(Qt::FramelessWindowHint);
+    setWindowFlag(Qt::FramelessWindowHint);
     //make window transparent
-    //setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_TranslucentBackground);
 
+    createTrayMenu();
     updatePreferences();
 
     //connection for our custom context menu
@@ -41,6 +46,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     updateTime();
 
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::createTrayMenu()
+{
     //add tray icon
     QIcon icon(":/icon.png");
     trayicon = new QSystemTrayIcon(this);
@@ -61,11 +75,7 @@ MainWindow::MainWindow(QWidget *parent)
     //add them to the tray
     trayicon->setContextMenu(trayIconMenu);
     trayicon->show();
-}
 
-MainWindow::~MainWindow()
-{
-    delete ui;
 }
 
 void MainWindow::updateTime()
@@ -77,7 +87,7 @@ void MainWindow::updateTime()
 
     int timeformat = s.value("TimeFormat").toInt();
     if(timeformat == 0)
-        currentTimeString = currentTime.toString("hh:mm ap");
+        currentTimeString = currentTime.toString("hh:mm AP");
     else
         currentTimeString = currentTime.toString("hh:mm");
 
@@ -85,7 +95,7 @@ void MainWindow::updateTime()
     if(currentTime.second() %2 == 0)
         currentTimeString[2] = ' ';
 
-    ui->timeDisplay->display(currentTimeString);
+    ui->timeDisplay->setText(currentTimeString);
 }
 
 void MainWindow::showContextMenu(const QPoint &pos)
