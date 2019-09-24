@@ -15,11 +15,15 @@ public:
     explicit prefrences(QWidget *parent = nullptr);
     ~prefrences();
 
+signals:
+    void fontValueChanged(int size);
+
 private:
     Ui::prefrences *ui;
 
 private slots:
     void onAccepted();
+    void on_fontSizeSpinBox_valueChanged(int arg1);
 };
 
 #endif // PREFRENCES_H

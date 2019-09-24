@@ -170,8 +170,18 @@ void MainWindow::setColour()
 void MainWindow::showPreferences()
 {
     prefrences p(this);
+    connect(&p, SIGNAL(fontValueChanged(int)), this, SLOT(changeFontSize(int)));
     p.exec();
     updatePreferences();
+}
+
+void MainWindow::changeFontSize(int size)
+{
+    qDebug() << "Recv Size: "<<size;
+    QSettings settings;
+    QFont font(settings.value("Font").toString());
+    font.setPointSize(size);
+    ui->timeDisplay->setFont(font);
 }
 
 void MainWindow::updatePreferences()

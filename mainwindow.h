@@ -20,6 +20,7 @@ private slots:
     void updateTime();
     void showContextMenu(const QPoint&);
     void showPreferences();
+    void changeFontSize(int size);
 
 protected:
     void mouseReleaseEvent(QMouseEvent *);

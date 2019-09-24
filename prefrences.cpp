@@ -2,6 +2,7 @@
 #include "ui_prefrences.h"
 
 #include<QSettings>
+#include<QDebug>
 
 prefrences::prefrences(QWidget *parent) :
     QDialog(parent),
@@ -32,4 +33,10 @@ void prefrences::onAccepted()
     settings.setValue("TimeFormat", ui->timeFormatSelect->currentIndex());
     settings.setValue("Font", ui->fontComboBox->currentFont().toString());
     settings.setValue("FontSize", ui->fontSizeSpinBox->value());
+}
+
+void prefrences::on_fontSizeSpinBox_valueChanged(int arg1)
+{
+    qDebug() << "send Size: "<<arg1;
+    emit fontValueChanged(arg1);
 }
