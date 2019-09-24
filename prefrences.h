@@ -17,6 +17,7 @@ public:
 
 signals:
     void fontValueChanged(int size);
+    void fontChanged(QFont f);
 
 private:
     Ui::prefrences *ui;
@@ -24,6 +25,7 @@ private:
 private slots:
     void onAccepted();
     void on_fontSizeSpinBox_valueChanged(int arg1);
+    void on_fontComboBox_currentFontChanged(const QFont &f);
 };
 
 #endif // PREFRENCES_H

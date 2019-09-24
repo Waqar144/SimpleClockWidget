@@ -171,6 +171,7 @@ void MainWindow::showPreferences()
 {
     prefrences p(this);
     connect(&p, SIGNAL(fontValueChanged(int)), this, SLOT(changeFontSize(int)));
+    connect(&p, SIGNAL(fontChanged(QFont)), this, SLOT(onFontChanged(QFont)));
     p.exec();
     updatePreferences();
 }
@@ -182,6 +183,13 @@ void MainWindow::changeFontSize(int size)
     QFont font(settings.value("Font").toString());
     font.setPointSize(size);
     ui->timeDisplay->setFont(font);
+}
+
+void MainWindow::onFontChanged(QFont f)
+{
+    QSettings settings;
+    f.setPointSize(settings.value("FontSize").toInt());
+    ui->timeDisplay->setFont(f);
 }
 
 void MainWindow::updatePreferences()

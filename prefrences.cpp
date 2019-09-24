@@ -40,3 +40,8 @@ void prefrences::on_fontSizeSpinBox_valueChanged(int arg1)
     qDebug() << "send Size: "<<arg1;
     emit fontValueChanged(arg1);
 }
+
+void prefrences::on_fontComboBox_currentFontChanged(const QFont &f)
+{
+    emit fontChanged(f);
+}

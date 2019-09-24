@@ -21,6 +21,7 @@ private slots:
     void showContextMenu(const QPoint&);
     void showPreferences();
     void changeFontSize(int size);
+    void onFontChanged(QFont f);
 
 protected:
     void mouseReleaseEvent(QMouseEvent *);
