@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>460</width>
-    <height>338</height>
+    <width>444</width>
+    <height>302</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,9 @@
      <widget class="QLCDNumber" name="lcdNumber">
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
+      </property>
+      <property name="digitCount">
+       <number>8</number>
       </property>
      </widget>
     </item>
