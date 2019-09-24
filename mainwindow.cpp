@@ -177,5 +177,8 @@ void MainWindow::showPreferences()
 void MainWindow::updatePreferences()
 {
     QSettings settings;
+    QFont font(settings.value("Font").toString());
+    font.setPointSize(settings.value("FontSize").toInt());
+    ui->timeDisplay->setFont(font);
     setColour();
 }
