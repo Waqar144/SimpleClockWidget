@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSystemTrayIcon>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,6 +31,10 @@ private:
     Ui::MainWindow *ui;
     QPoint m_mousePos;
 
+    QSystemTrayIcon *trayicon;
+    QMenu* trayIconMenu;
+
     void setColour();
+    void updatePreferences();
 };
 #endif // MAINWINDOW_H

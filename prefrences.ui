@@ -21,30 +21,6 @@
      </property>
     </widget>
    </item>
-   <item row="5" column="0" colspan="2">
-    <widget class="QCheckBox" name="showBorders">
-     <property name="text">
-      <string>Show Window Borders</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QCheckBox" name="checkBox">
-     <property name="text">
-      <string>Transparent Window</string>
-     </property>
-    </widget>
-   </item>
-   <item row="9" column="1">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="colorSelect">
      <item>
@@ -84,8 +60,15 @@
      </item>
     </widget>
    </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="timeLabel">
+     <property name="text">
+      <string>Time Format</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="1">
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="timeFormatSelect">
      <item>
       <property name="text">
        <string>12 Hour AM/PM</string>
@@ -98,10 +81,13 @@
      </item>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Time Format</string>
+   <item row="7" column="1">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>

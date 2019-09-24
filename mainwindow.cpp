@@ -22,11 +22,14 @@ MainWindow::MainWindow(QWidget *parent)
     restoreGeometry(settings.value("MainGeometry").toByteArray());
     restoreState(settings.value("MainState").toByteArray());
 
-    //this->setFixedSize(400, 100);
-    //make the background transparent
-    setAttribute(Qt::WA_TranslucentBackground);
-    //make it stay on top and remove all window borders
-    setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint | Qt::Tool);
+    //set Flags
+    setWindowFlag(Qt::WindowStaysOnTopHint);
+    setWindowFlag(Qt::Tool);
+    //setWindowFlag(Qt::FramelessWindowHint);
+    //make window transparent
+    //setAttribute(Qt::WA_TranslucentBackground);
+
+    updatePreferences();
 
     //connection for our custom context menu
     connect(this, &MainWindow::customContextMenuRequested,
@@ -37,6 +40,27 @@ MainWindow::MainWindow(QWidget *parent)
     timer->start(1000);
 
     updateTime();
+
+    //add tray icon
+    QIcon icon(":/icon.png");
+    trayicon = new QSystemTrayIcon(this);
+    trayicon->setIcon(icon);
+    //tray icon menu
+    trayIconMenu = new QMenu(this);
+    //create the actions
+    QAction *minimizeAction = new QAction(tr("Mi&nimize"), this);
+    connect(minimizeAction, &QAction::triggered, this, &MainWindow::hide);
+    QAction *showAction= new QAction(tr("&Show"), this);
+    connect(showAction, &QAction::triggered, this, &MainWindow::show);
+    QAction *quitAction= new QAction(tr("&Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+    //add the actions to tray menu
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(showAction);
+    trayIconMenu->addAction(quitAction);
+    //add them to the tray
+    trayicon->setContextMenu(trayIconMenu);
+    trayicon->show();
 }
 
 MainWindow::~MainWindow()
@@ -48,14 +72,20 @@ void MainWindow::updateTime()
 {
     QDateTime dt = QDateTime::currentDateTime();
     QTime currentTime = dt.time();
-    QString currentTimeString = currentTime.toString("hh:mm ap");
+    QString currentTimeString;
+    QSettings s;
+
+    int timeformat = s.value("TimeFormat").toInt();
+    if(timeformat == 0)
+        currentTimeString = currentTime.toString("hh:mm ap");
+    else
+        currentTimeString = currentTime.toString("hh:mm");
 
    // qDebug() << currentTime.toString("hh:mm ap");
     if(currentTime.second() %2 == 0)
         currentTimeString[2] = ' ';
 
-    ui->lcdNumber->display(currentTimeString);
-    setColour();
+    ui->timeDisplay->display(currentTimeString);
 }
 
 void MainWindow::showContextMenu(const QPoint &pos)
@@ -77,6 +107,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 void MainWindow::mousePressEvent(QMouseEvent *e)
 {
+    //e->pos will return position of cursor relative to the current window
     m_mousePos = e->pos();
 }
 
@@ -91,6 +122,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
     settings.setValue("MainGeometry", saveGeometry());
     settings.setValue("MainState", saveState());
     e->accept();
+    qApp->quit();
 }
 
 void MainWindow::setColour()
@@ -121,7 +153,7 @@ void MainWindow::setColour()
             p.setColor(QPalette::Foreground, color);
             break;
     }
-    this->ui->lcdNumber->setPalette(p);
+    this->ui->timeDisplay->setPalette(p);
     this->update();
 }
 
@@ -129,5 +161,11 @@ void MainWindow::showPreferences()
 {
     prefrences p(this);
     p.exec();
+    updatePreferences();
+}
+
+void MainWindow::updatePreferences()
+{
+    QSettings settings;
     setColour();
 }

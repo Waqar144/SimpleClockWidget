@@ -4,6 +4,8 @@
 
 int main(int argc, char *argv[])
 {
+    Q_INIT_RESOURCE(clock);
+
     QApplication a(argc, argv);
 
     a.setOrganizationName(QString("Code Buffer"));
