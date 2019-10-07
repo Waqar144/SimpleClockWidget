@@ -137,7 +137,7 @@ void MainWindow::closeEvent(QCloseEvent *e)
 
 void MainWindow::setColour(int colour)
 {
-    QPalette p;
+    QPalette p = ui->timeDisplay->palette();
     QColor color;
 
     switch (colour) {
@@ -174,6 +174,7 @@ void MainWindow::showPreferences()
     connect(&p, SIGNAL(fontValueChanged(int)), this, SLOT(changeFontSize(int)));
     connect(&p, SIGNAL(fontChanged(QFont)), this, SLOT(onFontChanged(QFont)));
     connect(&p, &prefrences::colorChanged, this, &MainWindow::onColorChanged);
+    connect(&p, &prefrences::opacityValueChanged, this, &MainWindow::onOpacityChanged);
 
     p.exec();
     updatePreferences();
@@ -200,6 +201,20 @@ void MainWindow::onColorChanged(int color)
     setColour(color);
 }
 
+void MainWindow::onOpacityChanged(int opacity)
+{
+    qreal op = static_cast<qreal>(opacity);
+    op = op/100;
+    qDebug()<<opacity;
+    qDebug()<<op;
+    QPalette p = ui->timeDisplay->palette();
+    QColor c = p.color(QPalette::Foreground);
+    c.setAlphaF(op);
+    p.setColor(QPalette::Foreground, c);
+    ui->timeDisplay->setPalette(p);
+    this->update();
+}
+
 void MainWindow::updatePreferences()
 {
     QSettings settings;
@@ -209,4 +224,10 @@ void MainWindow::updatePreferences()
 
     int colour = settings.value("Colour").toInt();
     setColour(colour);
+
+    //qreal opac = settings.value("Opacity").toReal();
+    int opacity = static_cast<int>(settings.value("Opacity").toReal() * 100);
+    //int opacity = static_cast<int>(opac * 100);
+    onOpacityChanged(opacity);
+
 }

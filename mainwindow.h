@@ -23,6 +23,7 @@ private slots:
     void changeFontSize(int size);
     void onFontChanged(QFont f);
     void onColorChanged(int);
+    void onOpacityChanged(int);
 
 protected:
     void mouseReleaseEvent(QMouseEvent *);

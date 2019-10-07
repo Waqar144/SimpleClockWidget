@@ -19,10 +19,14 @@ prefrences::prefrences(QWidget *parent) :
     QFont font(settings.value("Font").toString());
     ui->fontComboBox->setCurrentFont(font);
     ui->fontSizeSpinBox->setValue(settings.value("FontSize").toInt());
+    int opacity = static_cast<int>(settings.value("Opacity").toReal() * 100);
+    qDebug()<<opacity;
+    ui->opacitySlider->setValue(opacity);
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &prefrences::onAccepted);
     connect(ui->colorSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
             this, &prefrences::colorChanged);
+    connect(ui->opacitySlider, &QSlider::valueChanged, this, &prefrences::opacityValueChanged);
 }
 
 prefrences::~prefrences()
@@ -37,6 +41,10 @@ void prefrences::onAccepted()
     settings.setValue("TimeFormat", ui->timeFormatSelect->currentIndex());
     settings.setValue("Font", ui->fontComboBox->currentFont().toString());
     settings.setValue("FontSize", ui->fontSizeSpinBox->value());
+    qreal opacity = static_cast<qreal>(ui->opacitySlider->value());
+    opacity /= 100;
+    qDebug()<<"onAccepted(): "<<opacity;
+    settings.setValue("Opacity", opacity);
 }
 
 void prefrences::on_fontSizeSpinBox_valueChanged(int arg1)

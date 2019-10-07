@@ -19,6 +19,7 @@ signals:
     void fontValueChanged(int size);
     void fontChanged(QFont f);
     void colorChanged(int color);
+    void opacityValueChanged(int opacity);
 
 private:
     Ui::prefrences *ui;
