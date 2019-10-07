@@ -22,6 +22,7 @@ private slots:
     void showPreferences();
     void changeFontSize(int size);
     void onFontChanged(QFont f);
+    void onColorChanged(int);
 
 protected:
     void mouseReleaseEvent(QMouseEvent *);
@@ -37,7 +38,7 @@ private:
     QMenu* trayIconMenu;
 
     void createTrayMenu();
-    void setColour();
+    void setColour(int colour);
     void updatePreferences();
 };
 #endif // MAINWINDOW_H

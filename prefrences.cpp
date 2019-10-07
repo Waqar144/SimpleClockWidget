@@ -3,6 +3,7 @@
 
 #include<QSettings>
 #include<QDebug>
+#include<QColorDialog>
 
 prefrences::prefrences(QWidget *parent) :
     QDialog(parent),
@@ -18,7 +19,10 @@ prefrences::prefrences(QWidget *parent) :
     QFont font(settings.value("Font").toString());
     ui->fontComboBox->setCurrentFont(font);
     ui->fontSizeSpinBox->setValue(settings.value("FontSize").toInt());
+
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, &prefrences::onAccepted);
+    connect(ui->colorSelect, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
+            this, &prefrences::colorChanged);
 }
 
 prefrences::~prefrences()
@@ -37,7 +41,6 @@ void prefrences::onAccepted()
 
 void prefrences::on_fontSizeSpinBox_valueChanged(int arg1)
 {
-    qDebug() << "send Size: "<<arg1;
     emit fontValueChanged(arg1);
 }
 

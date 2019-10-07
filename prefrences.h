@@ -18,6 +18,7 @@ public:
 signals:
     void fontValueChanged(int size);
     void fontChanged(QFont f);
+    void colorChanged(int color);
 
 private:
     Ui::prefrences *ui;

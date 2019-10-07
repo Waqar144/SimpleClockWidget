@@ -135,10 +135,8 @@ void MainWindow::closeEvent(QCloseEvent *e)
     qApp->quit();
 }
 
-void MainWindow::setColour()
+void MainWindow::setColour(int colour)
 {
-    QSettings settings;
-    int colour = settings.value("Colour").toInt();
     QPalette p;
     QColor color;
 
@@ -159,9 +157,11 @@ void MainWindow::setColour()
             p.setColor(QPalette::Foreground, Qt::yellow);
             break;
         case 5:
-            color = QColor::fromRgb(62, 0, 174);
+            color = QColor::fromRgb(62, 0, 174, 100);
             p.setColor(QPalette::Foreground, color);
             break;
+        case 6:
+            p.setColor(QPalette::Foreground, Qt::white);
     }
     this->ui->timeDisplay->setPalette(p);
     this->update();
@@ -170,8 +170,11 @@ void MainWindow::setColour()
 void MainWindow::showPreferences()
 {
     prefrences p(this);
+
     connect(&p, SIGNAL(fontValueChanged(int)), this, SLOT(changeFontSize(int)));
     connect(&p, SIGNAL(fontChanged(QFont)), this, SLOT(onFontChanged(QFont)));
+    connect(&p, &prefrences::colorChanged, this, &MainWindow::onColorChanged);
+
     p.exec();
     updatePreferences();
 }
@@ -192,11 +195,18 @@ void MainWindow::onFontChanged(QFont f)
     ui->timeDisplay->setFont(f);
 }
 
+void MainWindow::onColorChanged(int color)
+{
+    setColour(color);
+}
+
 void MainWindow::updatePreferences()
 {
     QSettings settings;
     QFont font(settings.value("Font").toString());
     font.setPointSize(settings.value("FontSize").toInt());
     ui->timeDisplay->setFont(font);
-    setColour();
+
+    int colour = settings.value("Colour").toInt();
+    setColour(colour);
 }
