@@ -17,17 +17,17 @@ public:
 
 signals:
     void fontValueChanged(int size);
-    void fontChanged(QFont f);
+    void fontChanged(const QFont &f);
     void colorChanged(int color);
     void opacityValueChanged(int opacity);
 
 private:
     Ui::prefrences *ui;
 
+    void loadSettings();
+
 private slots:
     void onAccepted();
-    void on_fontSizeSpinBox_valueChanged(int arg1);
-    void on_fontComboBox_currentFontChanged(const QFont &f);
 };
 
 #endif // PREFRENCES_H

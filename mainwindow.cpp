@@ -182,7 +182,6 @@ void MainWindow::showPreferences()
 
 void MainWindow::changeFontSize(int size)
 {
-    qDebug() << "Recv Size: "<<size;
     QSettings settings;
     QFont font(settings.value("Font").toString());
     font.setPointSize(size);
@@ -203,10 +202,7 @@ void MainWindow::onColorChanged(int color)
 
 void MainWindow::onOpacityChanged(int opacity)
 {
-    qreal op = static_cast<qreal>(opacity);
-    op = op/100;
-    qDebug()<<opacity;
-    qDebug()<<op;
+    qreal op = static_cast<qreal>(opacity) /100.0;
     QPalette p = ui->timeDisplay->palette();
     QColor c = p.color(QPalette::Foreground);
     c.setAlphaF(op);
