@@ -12,7 +12,6 @@ I made it because often times when working I forget to look at the time and I ne
 ### TODO:
 
 -   Ability to set a reminder
--   Ability to add border to the text
 
 ## Compiling
 1. If you have Qt Creator then just import the project and run!
